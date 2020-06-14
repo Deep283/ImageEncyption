@@ -1,4 +1,12 @@
-import BlowfishVariables
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Mar 7 03:40:24 2020
+
+@author: deepak
+"""
+
+import blowfish_variables
 import time
 import numpy as np
 import multiprocessing
@@ -7,11 +15,11 @@ import base64
 
 
 class Blowfish:
-    sbox = BlowfishVariables.sbox
-    P = BlowfishVariables.P
+    sbox = blowfish_variables.sbox
+    P = blowfish_variables.P
     N = 16
 
-    def F(self, x):
+    def f(self, x):
         a = [0, 0, 0, 0]
 
         #dividing into x into 4 8-bits
@@ -27,7 +35,7 @@ class Blowfish:
         y = y % 0x100000000
         return y
 
-    def initializeBlowfish(self, key, keybytes):
+    def initialize_blowfish(self, key, keybytes):
         j = 0
         # an all zero input of 64 bits is divided into 8 bits 
         #and XORed with P array
@@ -65,7 +73,7 @@ class Blowfish:
         #implementing each round of blowfish algorithm
         for i in range(0, self.N):
             xl = xl ^ self.P[i]
-            t = self.F(xl)
+            t = self.f(xl)
             xr = t ^ xr
             t = xl
             xl = xr
@@ -89,7 +97,7 @@ class Blowfish:
         #implementing each round of blowfish algorithm
         for i in range(self.N + 1, 1, -1):
             xl = xl ^ self.P[i]
-            t = self.F(xl)
+            t = self.f(xl)
             xr = t ^ xr
             t = xl
             xl = xr
@@ -122,11 +130,10 @@ class Blowfish:
             p = p+8
         return dec8
 
-    def encrypt_image(self, strImg):
+    def encrypt_image(self, strImg, n):
         t= time.time()
-
-        pool = multiprocessing.Pool(processes=15)
-        print(multiprocessing.cpu_count())
+        pool = multiprocessing.Pool(n)
+        # print(multiprocessing.cpu_count())
 
         str=""
         zeros=[]    
@@ -187,11 +194,11 @@ class Blowfish:
         return elapsed
 
 
-    def decrypt_image(self, strImg):
+    def decrypt_image(self, strImg, n):
         
         t= time.time()
-        pool = multiprocessing.Pool(processes=15)
-        print(multiprocessing.cpu_count())
+        pool = multiprocessing.Pool(n)
+        # print(multiprocessing.cpu_count())
 
         # convert image to Base64 and store in string str
         str=""

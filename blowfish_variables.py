@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Mar 7 03:14:24 2020
+
+@author: deepak
+"""
+
 sbox = [
     [   0xD1310BA6, 0x98DFB5AC, 0x2FFD72DB, 0xD01ADFB7,
         0xB8E1AFED, 0x6A267E96, 0xBA7C9045, 0xF12C7F99,
